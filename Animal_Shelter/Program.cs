@@ -1,7 +1,17 @@
+using Animal_Shelter.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+string connStr = builder.Configuration.GetConnectionString("ConnectionStr")
+    ?? throw new Exception("No Connection String found.");
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<ShelterDbContext>(options =>
+    options.UseSqlServer(connStr));
 
 var app = builder.Build();
 

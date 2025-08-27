@@ -18,12 +18,12 @@ namespace Animal_Shelter.Data
         public DbSet<Entities.Breed> Breeds { get; set; } = null!;
         public DbSet<Entities.Gender> Gender { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Animal_Shelter;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-        }
+        //    optionsBuilder.UseSqlServer("");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,7 +71,7 @@ namespace Animal_Shelter.Data
                     HasMedicalIssues = false,
                     Description = "Friendly and energetic Labrador, loves kids.",
                     AdmissionDate = new DateTime(2023, 5, 12),
-                    ImageUrl = "https://cdn.pixabay.com/photo/2016/02/19/10/00/dog-1209621_960_720.jpg"
+                    ImageUrl = "https://www.vidavetcare.com/wp-content/uploads/sites/234/2022/04/labrador-retriever-dog-breed-info.jpeg"
                 },
                 new AnimalQuestionnaire
                 {

@@ -6,13 +6,15 @@
     <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Image</th>
             <th scope="col">Name</th>
             <th scope="col">Age</th>
             <th scope="col">Species</th>
             <th scope="col">Breed</th>
             <th scope="col">Gender</th>
             <th scope="col">Description</th>
-            <th scope="col">Image</th>
+            <th scope="col">Action</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -20,21 +22,28 @@
         {
             <tr>
                 <th scope="row">@i.Id</th>
+
+                <td>
+                    @if (!string.IsNullOrEmpty(i.ImageUrl))
+                        {
+                           <img src="@i.ImageUrl" alt="@i.Name" width="100" />
+                        }
+                        else
+                        {
+                            <span>No image</span>
+                        }
+                </td>
                 <td>@i.Name</td>
                 <td>@i.Age</td>
                 <td>@i.Species?.Name</td>
                 <td>@i.Breed?.Name</td>
                 <td>@i.Gender?.Name</td>
                 <td>@i.Description</td>
+
                 <td>
-                    @if (!string.IsNullOrEmpty(i.ImageUrl))
-                    {
-                        <img src="@i.ImageUrl" alt="@i.Name" width="100" />
-                    }
-                    else
-                    {
-                        <span>No image</span>
-                    }
+                    <a asp-action="DetailInfo" asp-route-id="@i.Id" class="btn  btn-info fw-bold">
+                        Детальніше
+                    </a>
                 </td>
             </tr>
         }

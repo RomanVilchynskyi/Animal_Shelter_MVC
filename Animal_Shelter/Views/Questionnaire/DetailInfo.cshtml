@@ -1,0 +1,42 @@
+﻿@model Animal_Shelter.Data.Entities.AnimalQuestionnaire
+
+<h2>Детальна інформація</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>Ім'я</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Вік</th>
+        <td>@Model.Age</td>
+    </tr>
+    <tr>
+        <th>Вид</th>
+        <td>@Model.Species?.Name</td>
+    </tr>
+    <tr>
+        <th>Порода</th>
+        <td>@Model.Breed?.Name</td>
+    </tr>
+    <tr>
+        <th>Стать</th>
+        <td>
+            @* @Model.Gender?.Name *@
+            @if (Model.Gender.Name == "Male")
+            {
+                <span class="badge rounded-pill bg-primary">Male</span>
+            }
+            else
+            {
+                <span class="badge rounded-pill bg-pink">Female</span>
+            }
+        </td>
+    </tr>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Назад до списку</a>
