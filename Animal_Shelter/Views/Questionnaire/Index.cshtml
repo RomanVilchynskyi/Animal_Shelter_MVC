@@ -2,6 +2,8 @@
 
 <h1>Animals in Shelter</h1>
 
+<a asp-action="Create" class="btn btn-primary my-1">Create New Questionnaire for an animal</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -44,6 +46,7 @@
                     <a asp-action="DetailInfo" asp-route-id="@i.Id" class="btn  btn-info fw-bold">
                         Детальніше
                     </a>
+                    <a asp-action="Delete" asp-route-id="@i.Id" class="btn btn-outline-danger">Delete</a>
                 </td>
             </tr>
         }

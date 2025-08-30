@@ -1,6 +1,8 @@
 ﻿
 using Animal_Shelter.Data;
+using Animal_Shelter.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Animal_Shelter.Controllers
@@ -33,6 +35,35 @@ namespace Animal_Shelter.Controllers
                 return NotFound();
 
             return View(animal);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.SpeciesList = new SelectList(ctx.Species, "Id", "Name");
+            ViewBag.BreedList = new SelectList(ctx.Breeds, "Id", "Name");
+            ViewBag.GenderList = new SelectList(ctx.Gender, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(AnimalQuestionnaire animal)
+        {
+            ctx.AnimalQuestionnaires.Add(animal);
+            ctx.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var animal = ctx.AnimalQuestionnaires.Find(id);
+            if (animal == null) return NotFound();
+
+            ctx.AnimalQuestionnaires.Remove(animal);
+            ctx.SaveChanges(); // submit changes to DB
+
+            return RedirectToAction("Index");
         }
     }
 }

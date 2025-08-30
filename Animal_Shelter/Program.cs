@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connStr = builder.Configuration.GetConnectionString("ConnectionStr")
+string connStr = builder.Configuration.GetConnectionString("Remotedb")
     ?? throw new Exception("No Connection String found.");
 
 
