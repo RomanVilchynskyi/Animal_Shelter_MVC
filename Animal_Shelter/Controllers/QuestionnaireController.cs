@@ -49,11 +49,58 @@ namespace Animal_Shelter.Controllers
         [HttpPost]
         public IActionResult Create(AnimalQuestionnaire animal)
         {
+
+            if (!ModelState.IsValid)
+            {
+                // Якщо є валідація — перезаповнюємо списки
+                ViewBag.SpeciesList = new SelectList(ctx.Species, "Id", "Name");
+                ViewBag.BreedList = new SelectList(ctx.Breeds, "Id", "Name");
+                ViewBag.GenderList = new SelectList(ctx.Gender, "Id", "Name");
+                return View(animal);
+            }
+
             ctx.AnimalQuestionnaires.Add(animal);
             ctx.SaveChanges();
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var animal = ctx.AnimalQuestionnaires
+                .Include(a => a.Species)
+                .Include(a => a.Breed)
+                .Include(a => a.Gender)
+                .FirstOrDefault(a => a.Id == id);
+
+            if (animal == null) return NotFound();
+
+            ViewBag.SpeciesList = new SelectList(ctx.Species, "Id", "Name", animal.SpeciesId);
+            ViewBag.BreedList = new SelectList(ctx.Breeds, "Id", "Name", animal.BreedId);
+            ViewBag.GenderList = new SelectList(ctx.Gender, "Id", "Name", animal.GenderId);
+
+            return View(animal);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(AnimalQuestionnaire animal)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.SpeciesList = new SelectList(ctx.Species, "Id", "Name", animal.SpeciesId);
+                ViewBag.BreedList = new SelectList(ctx.Breeds, "Id", "Name", animal.BreedId);
+                ViewBag.GenderList = new SelectList(ctx.Gender, "Id", "Name", animal.GenderId);
+
+                return View(animal);
+            }
+
+            ctx.AnimalQuestionnaires.Update(animal);
+            ctx.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
 
         public IActionResult Delete(int id)
         {

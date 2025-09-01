@@ -32,7 +32,7 @@
                         }
                         else
                         {
-                            <span>No image</span>
+                        <img src="https://thumbs.dreamstime.com/z/no-image-icon-vector-available-picture-symbol-isolated-white-background-suitable-user-interface-element-205805243.jpg" alt="" width="100" />
                         }
                 </td>
                 <td>@i.Name</td>
@@ -43,10 +43,11 @@
                 <td>@i.Description</td>
 
                 <td>
-                    <a asp-action="DetailInfo" asp-route-id="@i.Id" class="btn  btn-info fw-bold">
+                    <a asp-action="DetailInfo" asp-route-id="@i.Id" class="btn btn-outline-info ">
                         Детальніше
                     </a>
-                    <a asp-action="Delete" asp-route-id="@i.Id" class="btn btn-outline-danger">Delete</a>
+                    <a data-bs-id="@i.Id" data-bs-name="@i.Name" data-bs-toggle="modal" data-bs-target="#EditConfirmDialog" class="btn btn-outline-success">Edit</a>
+                    <a data-bs-id="@i.Id" data-bs-name="@i.Name" data-bs-toggle="modal" data-bs-target="#deleteConfirmDialog" class="btn btn-outline-danger">Delete</a>
                 </td>
             </tr>
         }
@@ -59,4 +60,92 @@
         <img width="500" src="https://cdni.iconscout.com/illustration/premium/thumb/empty-state-concept-illustration-svg-png-download-2902554.png" alt="Empty" />
         <p>No animals found in the shelter</p>
     </div>
+}
+
+@* delete *@
+<div class="modal fade" id="deleteConfirmDialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete <b class="name"></b> animal questionnaire?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a id="deleteBtn" class="btn btn-success">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* edit *@
+<div class="modal fade" id="EditConfirmDialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to edit <b class="name"></b> animal questionnaire?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a id="editBtn" class="btn btn-success">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @* delete *@
+    <script>
+        var modal = document.getElementById('deleteConfirmDialog')
+        var deleteBtn = document.getElementById('deleteBtn')
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var name = button.getAttribute('data-bs-name')
+
+            // Update the modal's content.
+            var titleSpan = modal.querySelector('.modal-body .name')
+            titleSpan.textContent = name
+
+            // --- id
+            var id = button.getAttribute('data-bs-id')
+            var deleteBtn = modal.querySelector('.modal #deleteBtn')
+            deleteBtn.setAttribute('href', "/questionnaire/delete/" + id)
+        })
+
+    </script>
+
+    @* edit *@
+    <script>
+        var modal = document.getElementById('EditConfirmDialog')
+        var editBtn = document.getElementById('editBtn')
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            var title = button.getAttribute('data-bs-name')
+
+            // Update the modal's content.
+            var titleSpan = modal.querySelector('.modal-body .name')
+            titleSpan.textContent = title
+
+            // --- id
+            var id = button.getAttribute('data-bs-id')
+            var editBtn = modal.querySelector('.modal #editBtn')
+            editBtn.setAttribute('href', "/questionnaire/edit/" + id)
+        })
+
+    </script>
 }
