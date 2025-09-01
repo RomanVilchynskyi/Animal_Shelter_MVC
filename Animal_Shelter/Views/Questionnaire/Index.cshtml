@@ -135,11 +135,11 @@
             // Button that triggered the modal
             var button = event.relatedTarget
             // Extract info from data-bs-* attributes
-            var title = button.getAttribute('data-bs-name')
+            var name = button.getAttribute('data-bs-name')
 
             // Update the modal's content.
             var titleSpan = modal.querySelector('.modal-body .name')
-            titleSpan.textContent = title
+            titleSpan.textContent = name
 
             // --- id
             var id = button.getAttribute('data-bs-id')
