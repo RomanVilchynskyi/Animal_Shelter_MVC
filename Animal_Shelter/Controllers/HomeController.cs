@@ -1,23 +1,43 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Animal_Shelter.Models;
+using Animal_Shelter.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Animal_Shelter.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ShelterDbContext ctx;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ShelterDbContext ctx)
     {
-        _logger = logger;
+        this.ctx = ctx;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var model = ctx.AnimalQuestionnaires
+                .Include(a => a.Species)
+                .Include(a => a.Breed)
+                .Include(a => a.Gender)
+                .ToList();
+
+        return View(model);
     }
 
+    public IActionResult DetailInfo(int id)
+    {
+        var animal = ctx.AnimalQuestionnaires
+            .Include(a => a.Species)
+            .Include(a => a.Breed)
+            .Include(a => a.Gender)
+            .FirstOrDefault(x => x.Id == id);
+        if (animal == null)
+            return NotFound();
+
+        return View(animal);
+    }
     public IActionResult Privacy()
     {
         return View();

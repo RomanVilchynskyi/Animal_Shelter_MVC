@@ -1,5 +1,8 @@
 ﻿@model List<AnimalQuestionnaire>
-
+@{
+    string delDialogId = "deleteConfirm";
+    string editDialogId = "editConfirm";
+}
 <h1>Animals in Shelter</h1>
 
 <a asp-action="Create" class="btn btn-primary my-1">Create New Questionnaire for an animal</a>
@@ -46,8 +49,8 @@
                     <a asp-action="DetailInfo" asp-route-id="@i.Id" class="btn btn-outline-info ">
                         Детальніше
                     </a>
-                    <a data-bs-id="@i.Id" data-bs-name="@i.Name" data-bs-toggle="modal" data-bs-target="#EditConfirmDialog" class="btn btn-outline-success">Edit</a>
-                    <a data-bs-id="@i.Id" data-bs-name="@i.Name" data-bs-toggle="modal" data-bs-target="#deleteConfirmDialog" class="btn btn-outline-danger">Delete</a>
+                    <a data-bs-id=@i.Id data-bs-toggle="modal" data-bs-target="#@editDialogId" class="btn btn-outline-success">Edit</a>
+                    <a data-bs-id=@i.Id data-bs-toggle="modal" data-bs-target="#@delDialogId" class="btn btn-outline-danger">Delete</a>
                 </td>
             </tr>
         }
@@ -62,90 +65,22 @@
     </div>
 }
 
-@* delete *@
-<div class="modal fade" id="deleteConfirmDialog" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Confirmation</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Do you want to delete <b class="name"></b> animal questionnaire?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <a id="deleteBtn" class="btn btn-success">Yes</a>
-            </div>
-        </div>
-    </div>
-</div>
+<partial name="_ConfirmDialogPartial" model=@(new ConfirmDialogModel() {
+         DialogId = delDialogId,
+         Mode = DialogType.danger,
+         Message = "Do you want to delete the product?",
+         Title = "Delete Confirmation" }) />
 
-
-@* edit *@
-<div class="modal fade" id="EditConfirmDialog" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Confirmation</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Do you want to edit <b class="name"></b> animal questionnaire?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <a id="editBtn" class="btn btn-success">Yes</a>
-            </div>
-        </div>
-    </div>
-</div>
+<partial name="_ConfirmDialogPartial" model=@(new ConfirmDialogModel() {
+         DialogId = editDialogId,
+         Mode = DialogType.success,
+         Message = "Do you want to edit the product?",
+         Title = "Edit Confirmation" }) />
 
 @section Scripts
 {
-    @* delete *@
     <script>
-        var modal = document.getElementById('deleteConfirmDialog')
-        var deleteBtn = document.getElementById('deleteBtn')
-
-        modal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
-            var button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            var name = button.getAttribute('data-bs-name')
-
-            // Update the modal's content.
-            var titleSpan = modal.querySelector('.modal-body .name')
-            titleSpan.textContent = name
-
-            // --- id
-            var id = button.getAttribute('data-bs-id')
-            var deleteBtn = modal.querySelector('.modal #deleteBtn')
-            deleteBtn.setAttribute('href', "/questionnaire/delete/" + id)
-        })
-
+        configConfirmModal('@delDialogId', '/questionnaire/delete/');
+        configConfirmModal('@editDialogId', '/questionnaire/edit/');
     </script>
-
-    @* edit *@
-   @*  <script>
-        var modal = document.getElementById('EditConfirmDialog')
-        var editBtn = document.getElementById('editBtn')
-
-        modal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
-            var button = event.relatedTarget
-            // Extract info from data-bs-* attributes
-            var name = button.getAttribute('data-bs-name')
-
-            // Update the modal's content.
-            var titleSpan = modal.querySelector('.modal-body .name')
-            titleSpan.textContent = name
-
-            // --- id
-            var id = button.getAttribute('data-bs-id')
-            var editBtn = modal.querySelector('.modal #editBtn')
-            editBtn.setAttribute('href', "/questionnaire/edit/" + id)
-        })
-
-    </script> *@
 }

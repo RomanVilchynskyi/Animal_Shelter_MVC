@@ -1,0 +1,22 @@
+﻿@model AnimalQuestionnaire
+
+<div class="card h-100 shadow-sm">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name" style="object-fit:cover; height:250px;">
+
+    <div class="card-body text-center">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-description">@Model.Description</p>
+        <p class="card-text">
+            <b>Species:</b> @Model.Species?.Name <br />
+            <b>Breed:</b> @Model.Breed?.Name <br />
+            <b>Gender:</b> @Model.Gender?.Name
+        </p>
+    </div>
+
+    <div class="card-footer d-flex justify-content-between">
+        <a asp-action="DetailInfo" asp-route-id="@Model.Id" class="btn btn-outline-info btn-sm">
+            Details
+        </a>
+        <button type="button" class="btn btn-primary btn-sm">Add to Cart</button>
+    </div>
+</div>

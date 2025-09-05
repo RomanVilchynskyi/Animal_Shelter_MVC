@@ -1,0 +1,106 @@
+﻿@model Animal_Shelter.Data.Entities.AnimalQuestionnaire
+
+<h2>Детальна інформація</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <td>@Model.Id</td>
+    </tr>
+    <tr>
+        <th>Фото</th>
+        <td>
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="img-thumbnail" style="max-width:200px;" />
+            }
+            else
+            {
+                <span class="text-muted">No image</span>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Ім'я</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Вік</th>
+        <td>@Model.Age</td>
+    </tr>
+    <tr>
+        <th>Вид</th>
+        <td>@Model.Species?.Name</td>
+    </tr>
+    <tr>
+        <th>Порода</th>
+        <td>@Model.Breed?.Name</td>
+    </tr>
+    <tr>
+        <th>Стать</th>
+        <td>
+            @if (Model.Gender?.Name == "Male")
+            {
+                <span class="badge rounded-pill bg-primary">Male</span>
+            }
+            else if (Model.Gender?.Name == "Female")
+            {
+                <span class="badge rounded-pill bg-danger">Female</span>
+            }
+            else
+            {
+                <span class="badge rounded-pill bg-secondary">Unknown</span>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Вакцинований</th>
+        <td>
+            @if (Model.IsVaccinated)
+            {
+                <span class="badge bg-success">Yes</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">No</span>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Стерилізований</th>
+        <td>
+            @if (Model.IsSterilized)
+            {
+                <span class="badge bg-success">Yes</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">No</span>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Медичні проблеми</th>
+        <td>
+            @if (Model.HasMedicalIssues)
+            {
+                <span class="badge bg-warning text-dark">Yes</span>
+            }
+            else
+            {
+                <span class="badge bg-success">No</span>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Опис</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Дата прийняття</th>
+        <td>@Model.AdmissionDate.ToString("dd.MM.yyyy")</td>
+    </tr>
+    
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Назад до списку</a>
