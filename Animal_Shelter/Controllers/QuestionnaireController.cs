@@ -1,6 +1,8 @@
 ﻿
 using Animal_Shelter.Data;
 using Animal_Shelter.Data.Entities;
+using Animal_Shelter.Extensions;
+using Animal_Shelter.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +64,8 @@ namespace Animal_Shelter.Controllers
             ctx.AnimalQuestionnaires.Add(animal);
             ctx.SaveChanges();
 
+            TempData.Set(WebConstants.ToastMessage, new ToastModel("Questionnaire created successfully!"));
+
             return RedirectToAction("Index");
         }
 
@@ -98,6 +102,9 @@ namespace Animal_Shelter.Controllers
             ctx.AnimalQuestionnaires.Update(animal);
             ctx.SaveChanges();
 
+            TempData.Set(WebConstants.ToastMessage, new ToastModel("Questionnaire updated successfully!"));
+
+
             return RedirectToAction("Index");
         }
 
@@ -109,6 +116,9 @@ namespace Animal_Shelter.Controllers
 
             ctx.AnimalQuestionnaires.Remove(animal);
             ctx.SaveChanges(); // submit changes to DB
+
+            TempData.Set(WebConstants.ToastMessage, new ToastModel("Questionnaire deleted successfully!"));
+
 
             return RedirectToAction("Index");
         }
