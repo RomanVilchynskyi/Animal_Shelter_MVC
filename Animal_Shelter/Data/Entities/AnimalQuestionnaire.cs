@@ -15,6 +15,8 @@ namespace Animal_Shelter.Data.Entities
         public int Age { get; set; } // вік у роках
         public bool IsVaccinated { get; set; } // щеплена чи ні
         public bool IsSterilized { get; set; } // стерилізована чи ні
+        public bool IsFavorite { get; set; }
+
         public bool HasMedicalIssues { get; set; } // наявність проблем зі здоров’ям
 
         [MinLength(5), MaxLength(3000)]

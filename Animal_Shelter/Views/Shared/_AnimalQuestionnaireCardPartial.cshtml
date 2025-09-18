@@ -17,6 +17,6 @@
         <a asp-action="DetailInfo" asp-route-id="@Model.Id" class="btn btn-outline-info btn-sm">
             Details
         </a>
-        <button type="button" class="btn btn-primary btn-sm">Add to Cart</button>
+        <a a asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id" type="button" class="btn btn-primary btn-sm">add to Fav</a>
     </div>
 </div>
