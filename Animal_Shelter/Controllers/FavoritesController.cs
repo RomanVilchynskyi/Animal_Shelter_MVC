@@ -43,8 +43,21 @@ public class FavoritesController : Controller
         return RedirectToAction("Index", "Home");
     }
 
-    public ActionResult Remove()
+    public ActionResult Remove(int id)
     {
-        return View();
+        var existingIds = HttpContext.Session.Get<List<int>>("FavItems");
+        List<int> ids = existingIds ?? new();
+
+        ids.Remove(id);
+        HttpContext.Session.Set("FavItems", ids);
+
+        return RedirectToAction("Index");
+    }
+
+    public ActionResult Clear()
+    {
+        HttpContext.Session.Remove("FavItems");
+
+        return RedirectToAction("Index");
     }
 }
