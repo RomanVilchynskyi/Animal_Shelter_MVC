@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Animal_Shelter.Interfaces
+
+@inject IFavService favService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,7 +35,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Questionnaire" asp-action="Index">Animals</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Favorites" asp-action="Index">Favorites (0)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Favorites" asp-action="Index">Favorites (@favService.GetFavSize(Context))</a>
                         </li>
                     </ul>
                 </div>

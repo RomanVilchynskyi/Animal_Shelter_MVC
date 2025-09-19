@@ -1,4 +1,7 @@
 using Animal_Shelter.Data;
+using Animal_Shelter.Interfaces;
+using Animal_Shelter.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,7 @@ builder.Services.AddSession(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IFavService, FavService>();
 
 builder.Services.AddDbContext<ShelterDbContext>(options =>
     options.UseSqlServer(connStr));
