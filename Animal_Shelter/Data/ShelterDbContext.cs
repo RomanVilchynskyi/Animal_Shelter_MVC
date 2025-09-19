@@ -1,11 +1,12 @@
 ﻿
 using Animal_Shelter.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 
 namespace Animal_Shelter.Data
 {
-    public class ShelterDbContext:DbContext
+    public class ShelterDbContext : IdentityDbContext
     {
         public ShelterDbContext()
         {
