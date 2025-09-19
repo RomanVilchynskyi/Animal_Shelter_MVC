@@ -20,6 +20,7 @@ builder.Services.AddSession(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IFavService, FavService>();
 
 builder.Services.AddDbContext<ShelterDbContext>(options =>

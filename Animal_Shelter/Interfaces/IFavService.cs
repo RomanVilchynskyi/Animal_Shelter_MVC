@@ -1,7 +1,15 @@
-﻿namespace Animal_Shelter.Interfaces
+﻿using Animal_Shelter.Data.Entities;
+
+namespace Animal_Shelter.Interfaces
 {
     public interface IFavService
     {
-        int GetFavSize(HttpContext httpContext);
+        List<int> GetItemIds();
+        List<AnimalQuestionnaire> GetAnimals();
+
+        void Add(int id);
+        void Remove(int id);
+        void Clear();
+        int GetFavSize();
     }
 }

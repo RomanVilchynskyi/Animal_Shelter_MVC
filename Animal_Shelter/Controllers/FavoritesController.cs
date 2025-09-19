@@ -5,6 +5,8 @@ using Animal_Shelter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Animal_Shelter.Extensions;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Animal_Shelter.Interfaces;
 
 
 namespace Animal_Shelter.Controllers;
@@ -12,51 +14,37 @@ namespace Animal_Shelter.Controllers;
 public class FavoritesController : Controller
 {
     private readonly ShelterDbContext ctx;
+    private readonly IFavService favService;
 
-    public FavoritesController(ShelterDbContext ctx)
+    public FavoritesController(ShelterDbContext ctx, IFavService favService)
     {
         this.ctx = ctx;
+        this.favService = favService;
     }
 
     public IActionResult Index()
     {
-        var existingIds = HttpContext.Session.Get<List<int>>("FavItems") ?? new List<int>();
-
-        var items = ctx.AnimalQuestionnaires
-                .Include(a => a.Species)
-                .Include(a => a.Breed)
-                .Include(a => a.Gender)
-                .Where(x => existingIds.Contains(x.Id))
-                .ToList();
+        var items = favService.GetAnimals();
 
         return View(items);
     }
     public ActionResult Add(int id) 
     {
-        var existingIds = HttpContext.Session.Get<List<int>>("FavItems");
-        List<int> ids = existingIds ?? new();
-
-        ids.Add(id);
-
-        HttpContext.Session.Set("FavItems", ids);
+        favService.Add(id);
 
         return RedirectToAction("Index", "Home");
     }
 
     public ActionResult Remove(int id)
     {
-        var existingIds = HttpContext.Session.Get<List<int>>("FavItems");
-        List<int> ids = existingIds ?? new();
-
-        ids.Remove(id);
-        HttpContext.Session.Set("FavItems", ids);
+        favService.Remove(id);
 
         return RedirectToAction("Index");
     }
 
     public ActionResult Clear()
     {
-        HttpContext.Session.Remove("FavItems");
+        favService.Clear();
 
         return RedirectToAction("Index");
     }
