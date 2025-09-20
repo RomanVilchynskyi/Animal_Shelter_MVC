@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 namespace Animal_Shelter.Data
 {
-    public class ShelterDbContext : IdentityDbContext
+    public class ShelterDbContext : IdentityDbContext<User>
     {
         public ShelterDbContext()
         {
