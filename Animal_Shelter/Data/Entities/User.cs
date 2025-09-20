@@ -6,5 +6,7 @@ namespace Animal_Shelter.Data.Entities
     {
         public string FullName { get; set; }
         public decimal? Donations { get; set; }
+
+        public ICollection<Order>? Orders { get; set; }
     }
 }

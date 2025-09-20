@@ -18,6 +18,7 @@ namespace Animal_Shelter.Data
         public DbSet<Entities.Species> Species { get; set; } = null!;
         public DbSet<Entities.Breed> Breeds { get; set; } = null!;
         public DbSet<Entities.Gender> Gender { get; set; } = null!;
+        public DbSet<Entities.Order> Orders { get; set; } = null!;
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
